@@ -91,37 +91,41 @@ TEST(Executor, should_return_facing_E_given_command_is_L_and_facing_is_S)
     EXPECT_EQ(t.heading, 'E');
 }
 
-// TEST(Executor, should_return_facing_S_given_command_is_R_and_facing_is_E)
-// {
-//     Executor executor(-10, 20, 'E');
-//     executor.Execute('R');
-//     auto t = executor.Query();
-//     EXPECT_EQ(t.heading, 'S');
-// }
+TEST(Executor, should_return_facing_S_given_command_is_R_and_facing_is_E)
+{
+    Pose pose{-10, 20, 'E'};
+    auto executor = Executor::NewExecutor(pose);
+    executor -> Execute(string("R"));
+    auto t = executor -> Query();
+    EXPECT_EQ(t.heading, 'S');
+}
 
-// TEST(Executor, should_return_facing_W_given_command_is_R_and_facing_is_S)
-// {
-//     Executor executor(-10, 20, 'S');
-//     executor.Execute('R');
-//     auto t = executor.Query();
-//     EXPECT_EQ(t.heading, 'W');
-// }
+TEST(Executor, should_return_facing_W_given_command_is_R_and_facing_is_S)
+{
+    Pose pose{-10, 20, 'S'};
+    auto executor = Executor::NewExecutor(pose);
+    executor -> Execute(string("R"));
+    auto t = executor -> Query();
+    EXPECT_EQ(t.heading, 'W');
+}
 
-// TEST(Executor, should_return_facing_N_given_command_is_R_and_facing_is_W)
-// {
-//     Executor executor(-10, 20, 'W');
-//     executor.Execute('R');
-//     auto t = executor.Query();
-//     EXPECT_EQ(t.heading, 'N');
-// }
+TEST(Executor, should_return_facing_N_given_command_is_R_and_facing_is_W)
+{
+    Pose pose{-10, 20, 'W'};
+    auto executor = Executor::NewExecutor(pose);
+    executor -> Execute(string("R"));
+    auto t = executor -> Query();
+    EXPECT_EQ(t.heading, 'N');
+}
 
-// TEST(Executor, should_return_facing_E_given_command_is_R_and_facing_is_N)
-// {
-//     Executor executor(-10, 20, 'N');
-//     executor.Execute('R');
-//     auto t = executor.Query();
-//     EXPECT_EQ(t.heading, 'E');
-// }
+TEST(Executor, should_return_facing_E_given_command_is_R_and_facing_is_N)
+{
+    Pose pose{-10, 20, 'N'};
+    auto executor = Executor::NewExecutor(pose);
+    executor -> Execute(string("R"));
+    auto t = executor -> Query();
+    EXPECT_EQ(t.heading, 'E');
+}
 
 int main(int argc, char **argv)
 {
