@@ -1,38 +1,19 @@
-#include "executor.h"
+#include "ExecutorImpl.hpp"
+#include <tuple>
 
-Executor::Executor() {
-    car = std::make_shared<Car>();
-}
+namespace adas {
 
-Executor::Executor(int _x, int _y, char c) {
-    car = std::make_shared<Car>(_x, _y, c);
-}
-
-void Executor::Initialize(int _x, int _y, char c) {
-    car.reset();
-    car = std::make_shared<Car>(_x, _y, c);
-}
-
-void Executor::Execute(char c) {
-    switch(c) {
-        case 'M': car -> Move(); break;
-        case 'L': car -> Turnleft(); break;
-        case 'R': car -> Turnright(); break;
-        default: cerr<<"Undefined execute char!"; break;
+    bool operator == (const Pose &lhs, const Pose &rhs) {
+        return std::tie(lhs.x, lhs.y, lhs.heading) == std::tie(rhs.x, rhs.y, rhs.heading);
     }
-}
 
-void Executor::Execute(const char *str) {
-    int len = strlen(str);
-    for(int i=0;i<len;i++) Execute(str[i]);
-}
+    ExecutorImpl::ExecutorImpl(const Pose &pose) noexcept :pose(pose) {}
 
-void Executor::Execute(const std::string& str) noexcept{
-    for(auto c : str) {
-        Execute(c);
+    Pose ExecutorImpl::Query() const noexcept {
+        return pose;
     }
-}
 
-CarTuple Executor::Query() noexcept{
-    return car -> GetInfo();
-}
+    unique_ptr<Executor> Executor::NewExecutor(const Pose &pose) noexcept {
+        return std::make_unique<ExecutorImpl>(pose);
+    }
+} 
