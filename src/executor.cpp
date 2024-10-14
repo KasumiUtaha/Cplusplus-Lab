@@ -1,4 +1,4 @@
-#include "Executor.h"
+#include "executor.h"
 
 Executor::Executor() {
     car = std::make_shared<Car>();
@@ -25,4 +25,14 @@ void Executor::Execute(char c) {
 void Executor::Execute(const char *str) {
     int len = strlen(str);
     for(int i=0;i<len;i++) Execute(str[i]);
+}
+
+void Executor::Execute(const std::string& str) noexcept{
+    for(auto c : str) {
+        Execute(c);
+    }
+}
+
+CarTuple Executor::Query() noexcept{
+    return car -> GetInfo();
 }

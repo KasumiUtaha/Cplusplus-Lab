@@ -2,6 +2,7 @@
 #include "car.h"
 #include<memory>
 #include<string.h>
+#include<string>
 using std::shared_ptr;
 
 class Executor {
@@ -17,4 +18,8 @@ public:
     void Execute(char c);
 
     void Execute(const char *str);
+
+    void Execute(const std::string& str) noexcept;
+
+    CarTuple Query() noexcept;
 };
