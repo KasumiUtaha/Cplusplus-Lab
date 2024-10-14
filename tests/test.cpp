@@ -55,44 +55,48 @@ TEST(Executor, should_return_y_minus_1_given_command_is_M_and_facing_is_S)
     EXPECT_EQ(t.y, 19);
 }
 
-// TEST(Executor, should_return_facing_N_given_command_is_L_and_facing_is_E)
-// {
-//     Executor executor(-10, 20, 'E');
-//     executor.Execute('L');
-//     auto t = executor.Query();
-//     EXPECT_EQ(get<2>(t), 'N');
-// }
+TEST(Executor, should_return_facing_N_given_command_is_L_and_facing_is_E)
+{
+    Pose pose{-10, 20, 'E'};
+    auto executor = Executor::NewExecutor(pose);
+    executor -> Execute(string("L"));
+    auto t = executor -> Query();
+    EXPECT_EQ(t.heading, 'N');
+}
 
-// TEST(Executor, should_return_facing_W_given_command_is_L_and_facing_is_N)
-// {
-//     Executor executor(-10, 20, 'N');
-//     executor.Execute('L');
-//     auto t = executor.Query();
-//     EXPECT_EQ(get<2>(t), 'W');
-// }
+TEST(Executor, should_return_facing_W_given_command_is_L_and_facing_is_N)
+{
+    Pose pose{-10, 20, 'N'};
+    auto executor = Executor::NewExecutor(pose);
+    executor -> Execute(string("L"));
+    auto t = executor -> Query();
+    EXPECT_EQ(t.heading, 'W');
+}
 
-// TEST(Executor, should_return_facing_S_given_command_is_L_and_facing_is_W)
-// {
-//     Executor executor(-10, 20, 'W');
-//     executor.Execute('L');
-//     auto t = executor.Query();
-//     EXPECT_EQ(get<2>(t), 'S');
-// }
+TEST(Executor, should_return_facing_S_given_command_is_L_and_facing_is_W)
+{
+    Pose pose{-10, 20, 'W'};
+    auto executor = Executor::NewExecutor(pose);
+    executor -> Execute(string("L"));
+    auto t = executor -> Query();
+    EXPECT_EQ(t.heading, 'S');
+}
 
-// TEST(Executor, should_return_facing_E_given_command_is_L_and_facing_is_S)
-// {
-//     Executor executor(-10, 20, 'S');
-//     executor.Execute('L');
-//     auto t = executor.Query();
-//     EXPECT_EQ(get<2>(t), 'E');
-// }
+TEST(Executor, should_return_facing_E_given_command_is_L_and_facing_is_S)
+{
+    Pose pose{-10, 20, 'S'};
+    auto executor = Executor::NewExecutor(pose);
+    executor -> Execute(string("L"));
+    auto t = executor -> Query();
+    EXPECT_EQ(t.heading, 'E');
+}
 
 // TEST(Executor, should_return_facing_S_given_command_is_R_and_facing_is_E)
 // {
 //     Executor executor(-10, 20, 'E');
 //     executor.Execute('R');
 //     auto t = executor.Query();
-//     EXPECT_EQ(get<2>(t), 'S');
+//     EXPECT_EQ(t.heading, 'S');
 // }
 
 // TEST(Executor, should_return_facing_W_given_command_is_R_and_facing_is_S)
@@ -100,7 +104,7 @@ TEST(Executor, should_return_y_minus_1_given_command_is_M_and_facing_is_S)
 //     Executor executor(-10, 20, 'S');
 //     executor.Execute('R');
 //     auto t = executor.Query();
-//     EXPECT_EQ(get<2>(t), 'W');
+//     EXPECT_EQ(t.heading, 'W');
 // }
 
 // TEST(Executor, should_return_facing_N_given_command_is_R_and_facing_is_W)
@@ -108,7 +112,7 @@ TEST(Executor, should_return_y_minus_1_given_command_is_M_and_facing_is_S)
 //     Executor executor(-10, 20, 'W');
 //     executor.Execute('R');
 //     auto t = executor.Query();
-//     EXPECT_EQ(get<2>(t), 'N');
+//     EXPECT_EQ(t.heading, 'N');
 // }
 
 // TEST(Executor, should_return_facing_E_given_command_is_R_and_facing_is_N)
@@ -116,7 +120,7 @@ TEST(Executor, should_return_y_minus_1_given_command_is_M_and_facing_is_S)
 //     Executor executor(-10, 20, 'N');
 //     executor.Execute('R');
 //     auto t = executor.Query();
-//     EXPECT_EQ(get<2>(t), 'E');
+//     EXPECT_EQ(t.heading, 'E');
 // }
 
 int main(int argc, char **argv)
