@@ -8,48 +8,52 @@ using namespace adas;
 TEST(Executor, should_return_init_pose_when_without_command)
 {
     auto executor = Executor::NewExecutor({0,0,'E'});
-    Pose pose = {0,0,'E'};
+    Pose pose = {0, 0, 'E'};
     EXPECT_EQ(pose, executor -> Query());
 }
 
 TEST(Executor, should_return_default_pose_when_without_init_and_command)
 {
     auto executor = Executor::NewExecutor();
-    Pose pose = {0,0,'N'};
+    Pose pose = {0, 0, 'N'};
     EXPECT_EQ(pose, executor -> Query());
 }
 
-// TEST(Executor, should_return_x_plus_1_given_command_is_M_and_facing_is_E)
-// {
-//     Pose pose{-10, 20, 'N'};
-//     auto executor = Executor::NewExecutor(pose);
-//     auto t = executor -> Query();
-//     EXPECT_EQ(t.x, -9);
-// }
+TEST(Executor, should_return_x_plus_1_given_command_is_M_and_facing_is_E)
+{
+    Pose pose{-10, 20, 'E'};
+    auto executor = Executor::NewExecutor(pose);
+    executor -> Execute(string("M"));
+    auto t = executor -> Query();
+    EXPECT_EQ(t.x, -9);
+}
 
-// TEST(Executor, should_return_x_minus_1_given_command_is_M_and_facing_is_W)
-// {
-//     Executor executor(-10, 20, 'W');
-//     executor.Execute('M');
-//     auto t = executor.Query();
-//     EXPECT_EQ(get<0>(t), -11);
-// }
+TEST(Executor, should_return_x_minus_1_given_command_is_M_and_facing_is_W)
+{
+    Pose pose{-10, 20, 'W'};
+    auto executor = Executor::NewExecutor(pose);
+    executor -> Execute(string("M"));
+    auto t = executor -> Query();
+    EXPECT_EQ(t.x, -11);
+}
 
-// TEST(Executor, should_return_y_plus_1_given_command_is_M_and_facing_is_N)
-// {
-//     Executor executor(-10, 20, 'N');
-//     executor.Execute('M');
-//     auto t = executor.Query();
-//     EXPECT_EQ(get<1>(t), 21);
-// }
+TEST(Executor, should_return_y_plus_1_given_command_is_M_and_facing_is_N)
+{
+    Pose pose{-10, 20, 'N'};
+    auto executor = Executor::NewExecutor(pose);
+    executor -> Execute(string("M"));
+    auto t = executor -> Query();
+    EXPECT_EQ(t.y, 21);
+}
 
-// TEST(Executor, should_return_y_minus_1_given_command_is_M_and_facing_is_S)
-// {
-//     Executor executor(-10, 20, 'S');
-//     executor.Execute('M');
-//     auto t = executor.Query();
-//     EXPECT_EQ(get<1>(t), 19);
-// }
+TEST(Executor, should_return_y_minus_1_given_command_is_M_and_facing_is_S)
+{
+    Pose pose{-10, 20, 'S'};
+    auto executor = Executor::NewExecutor(pose);
+    executor -> Execute(string("M"));
+    auto t = executor -> Query();
+    EXPECT_EQ(t.y, 19);
+}
 
 // TEST(Executor, should_return_facing_N_given_command_is_L_and_facing_is_E)
 // {
