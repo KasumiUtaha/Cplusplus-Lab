@@ -10,7 +10,7 @@ TEST(Executor, should_return_init_pose_when_without_command)
     auto executor = Executor::NewExecutor({0,0,'E'});
     Pose pose = {0, 0, 'E'};
     EXPECT_EQ(pose, executor -> Query());
-}
+} 
 
 TEST(Executor, should_return_default_pose_when_without_init_and_command)
 {
