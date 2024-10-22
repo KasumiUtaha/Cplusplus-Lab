@@ -48,10 +48,23 @@ namespace adas {
     }
 
     void ExecutorImpl::Execute(char c) {
+        unique_ptr<ICommand> cmder;
         switch(c) {
-            case 'M': Move(); break;
-            case 'L': TurnLeft(); break;
-            case 'R': TurnRight(); break;
+            case 'M': {
+                cmder = std::make_unique<MoveCommand>();
+                cmder -> DoOperate(*this);
+                break;
+            }
+            case 'L': {
+                cmder = std::make_unique<TurnLeftCommand>();
+                cmder -> DoOperate(*this);
+                break;
+            }
+            case 'R': {
+                cmder = std::make_unique<TurnRightCommand>();
+                cmder -> DoOperate(*this);
+                break;
+            }
             default: std::cerr<<"Undefined Command!\n";
         }
     }
