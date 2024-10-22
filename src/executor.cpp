@@ -47,6 +47,16 @@ namespace adas {
         }
     }
 
+    void ExecutorImpl::Fast() noexcept
+    {
+        fast ^= 1;
+    }
+
+    bool ExecutorImpl::isFast() const noexcept
+    {
+        return fast;
+    }
+
     void ExecutorImpl::Execute(char c) {
         unique_ptr<ICommand> cmder;
         switch(c) {
@@ -62,6 +72,11 @@ namespace adas {
             }
             case 'R': {
                 cmder = std::make_unique<TurnRightCommand>();
+                cmder -> DoOperate(*this);
+                break;
+            }
+            case 'F': {
+                cmder = std::make_unique<FastCommand>();
                 cmder -> DoOperate(*this);
                 break;
             }

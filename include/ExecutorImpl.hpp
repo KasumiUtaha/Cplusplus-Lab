@@ -6,7 +6,7 @@ namespace adas {
     class ExecutorImpl: public Executor {
     private:
         Pose pose;
-        bool isFast;
+        bool fast{false};
 
         class ICommand
         {
@@ -23,6 +23,7 @@ namespace adas {
 
             void DoOperate(ExecutorImpl& executor) const noexcept override
             {
+                if(executor.isFast()) executor.Move();
                 executor.Move();
             }
         };
@@ -34,6 +35,7 @@ namespace adas {
 
             void DoOperate(ExecutorImpl& executor) const noexcept override
             {
+                if(executor.isFast()) executor.Move();
                 executor.TurnLeft();
             }
         };
@@ -45,9 +47,32 @@ namespace adas {
 
             void DoOperate(ExecutorImpl& executor) const noexcept override
             {
+                if(executor.isFast()) executor.Move();
                 executor.TurnRight();
             }
         };
+
+        class FastCommand final : public ICommand 
+        {
+        public:
+            ~FastCommand() = default;
+
+            void DoOperate(ExecutorImpl& executor) const noexcept override
+            {
+                executor.Fast();
+            }
+        };
+
+        void Move(int step = 1);
+
+        void TurnLeft();
+
+        void TurnRight();
+
+        void Fast() noexcept;
+
+        bool isFast() const noexcept;
+
 
     public:
         explicit ExecutorImpl(const Pose& pose) noexcept;
@@ -56,11 +81,7 @@ namespace adas {
         ExecutorImpl(const ExecutorImpl &) = delete;
         ExecutorImpl& operator =(const ExecutorImpl &) = delete;
 
-        void Move(int step = 1);
 
-        void TurnLeft();
-
-        void TurnRight();
 
         Pose Query() const noexcept override;
 
