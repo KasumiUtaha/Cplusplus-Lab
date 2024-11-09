@@ -2,36 +2,22 @@
 
 namespace adas
 {
-    PoseHandler::PoseHandler(const Pose& pose) noexcept : pose(pose) {}
+    PoseHandler::PoseHandler(const Pose& pose) noexcept : 
+        point(pose.x, pose.y), facing(&Direction::GetDirection(pose.heading)) {}
 
     void PoseHandler::Move(int step)  noexcept
     {
-        switch(pose.heading) {
-            case 'N': pose.y+=step; break;
-            case 'S': pose.y-=step; break;
-            case 'W': pose.x-=step; break;
-            case 'E': pose.x+=step; break;
-        }
+        point += facing -> Move();
     }
 
     void PoseHandler::TurnLeft() noexcept
     {
-        switch (pose.heading) {
-            case 'N': pose.heading = 'W'; break;
-            case 'S': pose.heading = 'E'; break;
-            case 'W': pose.heading = 'S'; break;
-            case 'E': pose.heading = 'N'; break;
-        }
+        facing = &(facing -> LeftOne());
     }
 
     void PoseHandler::TurnRight() noexcept
     {
-        switch (pose.heading) {
-            case 'N': pose.heading = 'E'; break;
-            case 'S': pose.heading = 'W'; break;
-            case 'W': pose.heading = 'N'; break;
-            case 'E': pose.heading = 'S'; break;
-        }
+        facing = &(facing -> RightOne());
     }
 
     void PoseHandler::Fast() noexcept
@@ -46,7 +32,7 @@ namespace adas
 
     Pose PoseHandler::Query() const noexcept 
     {
-        return pose;
+        return {point.GetX(), point.GetY(), facing -> GetHeading()};
     }
 
 }
