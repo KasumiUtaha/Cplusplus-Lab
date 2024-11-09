@@ -1,6 +1,7 @@
 #include "ExecutorImpl.hpp"
 #include <tuple>
 #include <iostream>
+#include "Command.hpp"
 
 namespace adas {
 
