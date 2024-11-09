@@ -28,9 +28,17 @@ namespace adas
 
         void operator()(PoseHandler& poseHandler) const noexcept {
             if(poseHandler.isFast()) {
-                poseHandler.Move();
+                if(poseHandler.isReverse()) {
+                    poseHandler.Backward();
+                } else {
+                    poseHandler.Forward();
+                }
             }
-            poseHandler.Move();
+            if(poseHandler.isReverse()) {
+                poseHandler.Backward();
+            } else {
+                poseHandler.Forward();
+            }
         }
     };
 
@@ -47,9 +55,17 @@ namespace adas
 
         void operator()(PoseHandler& poseHandler) const noexcept {
             if(poseHandler.isFast()) {
-                poseHandler.Move();
+                if(poseHandler.isReverse()) {
+                    poseHandler.Backward();
+                } else {
+                    poseHandler.Forward();
+                }
             }
-            poseHandler.TurnLeft();
+            if(poseHandler.isReverse()) {
+                poseHandler.TurnRight();
+            } else {
+                poseHandler.TurnLeft();
+            }
         }
     };
 
@@ -66,9 +82,17 @@ namespace adas
 
         void operator()(PoseHandler& poseHandler) const noexcept {
             if(poseHandler.isFast()) {
-                poseHandler.Move();
+                if(poseHandler.isReverse()) {
+                    poseHandler.Backward();
+                } else {
+                    poseHandler.Forward();
+                }
+            }   
+            if(poseHandler.isReverse()) {
+                poseHandler.TurnLeft();
+            } else {
+                poseHandler.TurnRight();
             }
-            poseHandler.TurnRight();
         }
     };
 
@@ -84,6 +108,15 @@ namespace adas
 
         void operator()(PoseHandler& poseHandler) const noexcept {
             poseHandler.Fast();
+        }
+    };
+
+    class ReverseCommand final
+    {
+    public:
+
+        void operator()(PoseHandler& poseHandler) const noexcept {
+            poseHandler.Reverse();
         }
     };
 } 

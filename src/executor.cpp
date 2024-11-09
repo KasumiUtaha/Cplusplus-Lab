@@ -28,6 +28,7 @@ namespace adas {
             {'L', TurnLeftCommand()},
             {'R', TurnRightCommand()},
             {'F', FastCommand()},
+            {'B', ReverseCommand()},
        };
     //    cmderMap.emplace('M', std::make_unique<MoveCommand>());
     //    cmderMap.emplace('L', std::make_unique<TurnLeftCommand>());
