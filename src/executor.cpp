@@ -2,6 +2,9 @@
 #include <tuple>
 #include <iostream>
 #include "Command.hpp"
+#include <unordered_map>
+
+using std::unordered_map;
 
 namespace adas {
 
@@ -20,28 +23,15 @@ namespace adas {
     }
 
     void ExecutorImpl::Execute(char c) {
-        unique_ptr<ICommand> cmder;
-        switch(c) {
-            case 'M': {
-                cmder = std::make_unique<MoveCommand>();
-                break;
-            }
-            case 'L': {
-                cmder = std::make_unique<TurnLeftCommand>();
-                break;
-            }
-            case 'R': {
-                cmder = std::make_unique<TurnRightCommand>();
-                break;
-            }
-            case 'F': {
-                cmder = std::make_unique<FastCommand>();
-                break;
-            }
-            default: std::cerr<<"Undefined Command!\n";
-        }
-        if(cmder) {
-            cmder -> DoOperate(poseHandler);
+       unordered_map<char, unique_ptr<ICommand> > cmderMap;
+       cmderMap.emplace('M', std::make_unique<MoveCommand>());
+       cmderMap.emplace('L', std::make_unique<TurnLeftCommand>());
+       cmderMap.emplace('R', std::make_unique<TurnRightCommand>());
+       cmderMap.emplace('F', std::make_unique<FastCommand>());
+
+        const auto it = cmderMap.find(c);
+        if(it != cmderMap.end()) {
+            it -> second -> DoOperate(poseHandler);
         }
     }
 
