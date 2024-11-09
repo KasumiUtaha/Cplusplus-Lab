@@ -23,15 +23,27 @@ namespace adas {
     }
 
     void ExecutorImpl::Execute(char c) {
-       unordered_map<char, unique_ptr<ICommand> > cmderMap;
-       cmderMap.emplace('M', std::make_unique<MoveCommand>());
-       cmderMap.emplace('L', std::make_unique<TurnLeftCommand>());
-       cmderMap.emplace('R', std::make_unique<TurnRightCommand>());
-       cmderMap.emplace('F', std::make_unique<FastCommand>());
+       unordered_map<char, std::function<void(PoseHandler& PoseHandler)> > cmderMap;
+    //    cmderMap.emplace('M', std::make_unique<MoveCommand>());
+    //    cmderMap.emplace('L', std::make_unique<TurnLeftCommand>());
+    //    cmderMap.emplace('R', std::make_unique<TurnRightCommand>());
+    //    cmderMap.emplace('F', std::make_unique<FastCommand>());
 
+    //     const auto it = cmderMap.find(c);
+    //     if(it != cmderMap.end()) {
+    //         it -> second -> DoOperate(poseHandler);
+    //     }
+        MoveCommand moveCommand;
+        cmderMap.emplace('M', moveCommand.operate);
+        TurnLeftCommand turnLeftCommand;
+        cmderMap.emplace('L', turnLeftCommand.operate);
+        TurnRightCommand turnRightCommand;
+        cmderMap.emplace('R', turnRightCommand.operate);
+        FastCommand fastCommand;
+        cmderMap.emplace('F', fastCommand.operate);
         const auto it = cmderMap.find(c);
         if(it != cmderMap.end()) {
-            it -> second -> DoOperate(poseHandler);
+            it -> second(poseHandler);
         }
     }
 
