@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ExecutorImpl.hpp"
+#include "PoseHandler.hpp"
 
 namespace adas
 {
@@ -9,7 +10,7 @@ namespace adas
     public:
         virtual ~ICommand() = default;
 
-        virtual void DoOperate(ExecutorImpl& executor) const noexcept = 0;
+        virtual void DoOperate(PoseHandler& PoseHandler) const noexcept = 0;
     };
 
     class MoveCommand final : public ICommand
@@ -17,10 +18,10 @@ namespace adas
     public:
         ~MoveCommand() = default;
 
-        void DoOperate(ExecutorImpl& executor) const noexcept override
+        void DoOperate(PoseHandler& PoseHandler) const noexcept override
         {
-            if(executor.isFast()) executor.Move();
-            executor.Move();
+            if(PoseHandler.isFast()) PoseHandler.Move();
+            PoseHandler.Move();
         }
     };
 
@@ -29,10 +30,10 @@ namespace adas
     public:
         ~TurnLeftCommand() = default;
 
-        void DoOperate(ExecutorImpl& executor) const noexcept override
+        void DoOperate(PoseHandler& PoseHandler) const noexcept override
         {
-            if(executor.isFast()) executor.Move();
-            executor.TurnLeft();
+            if(PoseHandler.isFast()) PoseHandler.Move();
+            PoseHandler.TurnLeft();
         }
     };
 
@@ -41,10 +42,10 @@ namespace adas
     public:
         ~TurnRightCommand() = default;
 
-        void DoOperate(ExecutorImpl& executor) const noexcept override
+        void DoOperate(PoseHandler& PoseHandler) const noexcept override
         {
-            if(executor.isFast()) executor.Move();
-            executor.TurnRight();
+            if(PoseHandler.isFast()) PoseHandler.Move();
+            PoseHandler.TurnRight();
         }
     };
 
@@ -53,9 +54,9 @@ namespace adas
     public:
         ~FastCommand() = default;
 
-        void DoOperate(ExecutorImpl& executor) const noexcept override
+        void DoOperate(PoseHandler& PoseHandler) const noexcept override
         {
-            executor.Fast();
+            PoseHandler.Fast();
         }
     };
 } 
