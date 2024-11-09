@@ -23,7 +23,12 @@ namespace adas {
     }
 
     void ExecutorImpl::Execute(char c) {
-       unordered_map<char, std::function<void(PoseHandler& PoseHandler)> > cmderMap;
+       unordered_map<char, std::function<void(PoseHandler& PoseHandler)> > cmderMap {
+            {'M', MoveCommand()},
+            {'L', TurnLeftCommand()},
+            {'R', TurnRightCommand()},
+            {'F', FastCommand()},
+       };
     //    cmderMap.emplace('M', std::make_unique<MoveCommand>());
     //    cmderMap.emplace('L', std::make_unique<TurnLeftCommand>());
     //    cmderMap.emplace('R', std::make_unique<TurnRightCommand>());
@@ -33,10 +38,6 @@ namespace adas {
     //     if(it != cmderMap.end()) {
     //         it -> second -> DoOperate(poseHandler);
     //     }
-        cmderMap.emplace('M', MoveCommand());
-        cmderMap.emplace('L', TurnLeftCommand());
-        cmderMap.emplace('R', TurnRightCommand());
-        cmderMap.emplace('F', FastCommand());
         const auto it = cmderMap.find(c);
         if(it != cmderMap.end()) {
             it -> second(poseHandler);
